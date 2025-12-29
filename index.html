@@ -1,168 +1,194 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的 Ballsdex 圖鑑</title>
-    <!-- 引入 Tailwind CSS 讓樣式變漂亮 -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入 PapaParse 用來讀取 Google Sheets -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <style>
-        body { background-color: #111827; color: white; }
-        .card:hover { transform: translateY(-5px); border-color: #3b82f6; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metrodex Compendium Style</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 PapaParse (讀取 Google Sheets 用) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <!-- 引入 FontAwesome (放大鏡圖示用) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* 深色背景設定 */
+        body { 
+            background-color: #0f172a; /* 接近 Metrodex 的深藍黑背景 */
+            color: #e2e8f0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* 滾動條美化 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* 卡片特效 */
+        .dex-card {
+            background-color: #1e293b; /* 卡片背景色 */
+            transition: all 0.2s ease-in-out;
+            border: 1px solid #334155;
+        }
+        .dex-card:hover {
+            transform: translateY(-5px);
+            border-color: #60a5fa; /* 懸浮時邊框變藍 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        }
+        .dex-image-container {
+            background-image: radial-gradient(circle, #334155 1px, transparent 1px);
+            background-size: 20px 20px; /* 網格背景效果 */
+        }
+    </style>
 </head>
-<body class="p-6">
- 
-    <!-- 標題 -->
-    <div class="text-center mb-8">
-        <h1 class="text-4xl font-bold text-blue-500">Ballsdex 簡易圖鑑</h1>
-        <p class="text-gray-400 mt-2">資料來源：Google 試算表</p>
-    </div>
- 
-    <div class="flex flex-col md:flex-row gap-6 max-w-7xl mx-auto">
-       
-        <!-- 左側：搜尋與過濾 -->
-        <div class="w-full md:w-1/4 bg-gray-800 p-4 rounded-lg h-fit border border-gray-700">
-            <h2 class="text-xl font-bold mb-4 border-b border-gray-600 pb-2">篩選器</h2>
-           
-            <input type="text" id="searchInput" placeholder="搜尋名字..."
-                   class="w-full p-2 mb-4 bg-gray-700 rounded text-white border border-gray-600 focus:outline-none focus:border-blue-500">
-           
-            <div id="tagFilters" class="space-y-2">
-                <p class="text-gray-400 text-sm">點擊下方標籤過濾：</p>
-                <!-- 標籤按鈕會由程式自動產生 -->
-            </div>
-           
-            <button onclick="resetFilters()" class="w-full mt-4 bg-red-600 hover:bg-red-700 text-white py-1 rounded">
-                重置篩選
-            </button>
-        </div>
- 
-        <!-- 右側：卡片列表 -->
-        <div id="cardContainer" class="w-full md:w-3/4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <p class="text-gray-400">正在讀取資料...</p>
-        </div>
-    </div>
- 
-    <script>
-        // ==========================================
-        // 設定區：請把下面的網址換成你的 Google Sheet CSV 網址
-        // ==========================================
-        const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS3L8-yHh4d6Whg4WZiaE8J0Yp0jF6PMuZySx_H-EbbrDolzBveFku0pMSEz5c8-b_ez9sCmvhvInec/pub?output=csv';
-        // 例如: https://docs.google.com/spreadsheets/d/e/2PACX-.../pub?output=csv
-        // ==========================================
- 
-        let allBalls = [];
-        let activeTag = '';
- 
-        // 1. 初始化：讀取 Google Sheet 資料
-        window.onload = function() {
-            if(SHEET_URL.includes('你的_GOOGLE')) {
-                document.getElementById('cardContainer').innerHTML = '<p class="text-red-500">請編輯 HTML 檔案，填入正確的 Google Sheet 連結！</p>';
-                return;
-            }
- 
-            Papa.parse(SHEET_URL, {
-                download: true,
-                header: true,
-                complete: function(results) {
-                    allBalls = results.data.filter(item => item.Name); // 過濾空行
-                    generateTags();
-                    renderCards(allBalls);
-                },
-                error: function(err) {
-                    console.error(err);
-                    document.getElementById('cardContainer').innerHTML = '<p class="text-red-500">讀取失敗，請確認網址是否正確且已發布。</p>';
-                }
-            });
-        };
- 
-        // 2. 顯示卡片
-        function renderCards(data) {
-            const container = document.getElementById('cardContainer');
-            container.innerHTML = '';
- 
-            if (data.length === 0) {
-                container.innerHTML = '<p class="text-gray-500">找不到符合的球。</p>';
-                return;
-            }
- 
-            data.forEach(ball => {
-                // 處理標籤顯示
-                const tagsHtml = ball.Tags ? ball.Tags.split(',').map(t =>
-                    `<span class="text-xs bg-gray-700 px-2 py-1 rounded mr-1">${t.trim()}</span>`
-                ).join('') : '';
- 
-                const card = `
-                    <div class="card bg-gray-800 rounded-lg overflow-hidden border border-gray-700 transition duration-300">
-                        <div class="h-40 bg-gray-900 flex items-center justify-center p-2">
-                            <img src="${ball.Image}" alt="${ball.Name}" class="max-h-full max-w-full object-contain" onerror="this.src='https://placehold.co/100x100?text=No+Image'">
-                        </div>
-                        <div class="p-3">
-                            <div class="flex justify-between items-start">
-                                <h3 class="font-bold text-lg leading-tight text-white">${ball.Name}</h3>
-                                <span class="text-xs font-mono text-yellow-500">#${ball.Rarity || '?'}</span>
-                            </div>
-                            <div class="mt-2 flex flex-wrap gap-1">
-                                ${tagsHtml}
-                            </div>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += card;
-            });
-        }
- 
-        // 3. 自動產生標籤按鈕
-        function generateTags() {
-            const tags = new Set();
-            allBalls.forEach(ball => {
-                if(ball.Tags) ball.Tags.split(',').forEach(t => tags.add(t.trim()));
-            });
- 
-            const tagContainer = document.getElementById('tagFilters');
-            tagContainer.innerHTML = '';
-           
-            tags.forEach(tag => {
-                if(!tag) return;
-                const btn = document.createElement('button');
-                btn.className = `block w-full text-left px-3 py-1 rounded hover:bg-gray-600 transition text-sm mb-1 ${activeTag === tag ? 'bg-blue-600' : 'bg-transparent'}`;
-                btn.innerText = tag;
-                btn.onclick = () => filterByTag(tag);
-                tagContainer.appendChild(btn);
-            });
-        }
- 
-        // 4. 搜尋與過濾功能
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            filterData(term, activeTag);
-        });
- 
-        function filterByTag(tag) {
-            activeTag = (activeTag === tag) ? '' : tag; // 再次點擊取消
-            generateTags(); // 重新渲染按鈕顏色
-            filterData(searchInput.value.toLowerCase(), activeTag);
-        }
- 
-        function filterData(searchTerm, tag) {
-            const filtered = allBalls.filter(ball => {
-                const matchName = ball.Name && ball.Name.toLowerCase().includes(searchTerm);
-                const matchTag = tag ? (ball.Tags && ball.Tags.includes(tag)) : true;
-                return matchName && matchTag;
-            });
-            renderCards(filtered);
-        }
- 
-        function resetFilters() {
-            searchInput.value = '';
-            activeTag = '';
-            generateTags();
-            renderCards(allBalls);
-        }
-    </script>
+<body class="min-h-screen flex flex-col">
+
+    <!-- 頂部導航欄 (Top Navbar) -->
+    <nav class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-700 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- 標題 -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                    B
+                </div>
+                <h1 class="text-2xl font-bold tracking-wide text-white">Ballsdex Compendium</h1>
+            </div>
+
+            <!-- 搜尋與統計 -->
+            <div class="flex items-center gap-4 w-full md:w-auto">
+                <div class="relative w-full md:w-64">
+                    <span class="absolute left-3 top-2.5 text-slate-400">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" id="searchInput" placeholder="Search balls..." 
+                        class="w-full bg-slate-800 text-white pl-10 pr-4 py-2 rounded-lg border border-slate-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
+                </div>
+                
+                <div class="hidden md:block text-sm text-slate-400 bg-slate-800 px-3 py-2 rounded-lg border border-slate-700">
+                    <span id="countDisplay">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容區 (滿版網格) -->
+    <main class="flex-grow p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- 這裡用 grid-cols-2 (手機) 到 grid-cols-5 (大螢幕) -->
+            <div id="cardContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+                <!-- 卡片會自動產生在這裡 -->
+                <div class="col-span-full text-center py-20 text-slate-500">
+                    <i class="fas fa-spinner fa-spin text-4xl mb-4"></i>
+                    <p>正在從 Google Sheets 讀取圖鑑資料...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-6 text-center text-slate-500 text-sm">
+        <p>Powered by Google Sheets & GitHub Pages</p>
+    </footer>
+
+    <script>
+        // ==========================================
+        //  設定區：請貼上你的 Google Sheet CSV 網址
+        // ==========================================
+        const SHEET_URL = '你的_GOOGLE_SHEET_CSV_連結_貼在這裡';
+        // ==========================================
+
+        let allBalls = [];
+
+        window.onload = function() {
+            if(SHEET_URL.includes('你的_GOOGLE')) {
+                document.getElementById('cardContainer').innerHTML = 
+                    '<div class="col-span-full text-center text-red-500 text-xl font-bold py-10">請編輯 index.html 填入正確的 CSV 網址！</div>';
+                return;
+            }
+
+            Papa.parse(SHEET_URL, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    // 過濾掉名字是空的行
+                    allBalls = results.data.filter(item => item.Name && item.Name.trim() !== '');
+                    
+                    // 依照稀有度排序 (如果有 Rarity 欄位的話)
+                    allBalls.sort((a, b) => (parseInt(a.Rarity) || 999) - (parseInt(b.Rarity) || 999));
+                    
+                    renderCards(allBalls);
+                    updateCount(allBalls.length);
+                },
+                error: function(err) {
+                    document.getElementById('cardContainer').innerHTML = 
+                        '<div class="col-span-full text-center text-red-500">讀取失敗，請確認網址是否正確。</div>';
+                }
+            });
+        };
+
+        function renderCards(data) {
+            const container = document.getElementById('cardContainer');
+            container.innerHTML = '';
+
+            if (data.length === 0) {
+                container.innerHTML = '<div class="col-span-full text-center text-slate-500 py-10">找不到符合的球。</div>';
+                return;
+            }
+
+            data.forEach(ball => {
+                // 處理標籤 (Tags)
+                let rarityBadge = '';
+                if(ball.Rarity) {
+                    // 根據稀有度給不同顏色 (範例)
+                    let colorClass = 'bg-slate-700 text-slate-300';
+                    if(ball.Rarity <= 10) colorClass = 'bg-yellow-600/20 text-yellow-400 border border-yellow-600/50';
+                    else if(ball.Rarity <= 50) colorClass = 'bg-purple-600/20 text-purple-400 border border-purple-600/50';
+                    
+                    rarityBadge = `<span class="text-xs font-mono px-2 py-0.5 rounded ${colorClass}">#${ball.Rarity}</span>`;
+                }
+
+                const card = `
+                    <div class="dex-card rounded-xl overflow-hidden group relative flex flex-col">
+                        <!-- 圖片區域 -->
+                        <div class="dex-image-container h-40 bg-slate-800 flex items-center justify-center p-4 relative overflow-hidden">
+                            <img src="${ball.Image}" alt="${ball.Name}" loading="lazy" 
+                                class="max-h-full max-w-full object-contain drop-shadow-2xl transition-transform duration-300 group-hover:scale-110" 
+                                onerror="this.src='https://placehold.co/100x100?text=?'">
+                        </div>
+                        
+                        <!-- 文字區域 -->
+                        <div class="p-4 bg-slate-900/50 flex-grow flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-gray-100 text-lg leading-tight mb-1 truncate" title="${ball.Name}">
+                                    ${ball.Name}
+                                </h3>
+                                <div class="flex items-center justify-between mt-2">
+                                    ${rarityBadge}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        function updateCount(count) {
+            document.getElementById('countDisplay').innerText = `Total: ${count} Balls`;
+        }
+
+        // 搜尋功能
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allBalls.filter(ball => 
+                ball.Name.toLowerCase().includes(term) || 
+                (ball.Tags && ball.Tags.toLowerCase().includes(term))
+            );
+            renderCards(filtered);
+            updateCount(filtered.length);
+        });
+    </script>
 </body>
 </html>
