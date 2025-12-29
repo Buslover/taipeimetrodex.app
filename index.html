@@ -1,488 +1,168 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-<meta http-equiv=Content-Type content="text/html; charset=utf-8">
-<meta name=Generator content="Microsoft Word 15 (filtered)">
-<style>
-<!--
- /* Font Definitions */
- @font-face
-	{font-family:新細明體;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@新細明體";
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
- /* Style Definitions */
- p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-.MsoChpDefault
-	{font-family:"Calibri",sans-serif;}
- /* Page Definitions */
- @page WordSection1
-	{size:595.3pt 841.9pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;
-	layout-grid:18.0pt;}
-div.WordSection1
-	{page:WordSection1;}
--->
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的 Ballsdex 圖鑑</title>
+    <!-- 引入 Tailwind CSS 讓樣式變漂亮 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 PapaParse 用來讀取 Google Sheets -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <style>
+        body { background-color: #111827; color: white; }
+        .card:hover { transform: translateY(-5px); border-color: #3b82f6; }
+    </style>
 </head>
-
-<body lang=ZH-TW style='word-wrap:break-word;text-justify-trim:punctuation'>
-
-<div class=WordSection1 style='layout-grid:18.0pt'>
-
-<p class=MsoNormal><span lang=EN-US>&lt;!DOCTYPE html&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&lt;html lang=&quot;zh-TW&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&lt;head&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;meta charset=&quot;UTF-8&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;meta name=&quot;viewport&quot;
-content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;title&gt;</span><span
-style='font-family:"新細明體",serif'>我的</span><span lang=EN-US> Ballsdex </span><span
-style='font-family:"新細明體",serif'>圖鑑</span><span lang=EN-US>&lt;/title&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;!-- </span><span style='font-family:
-"新細明體",serif'>引入</span><span lang=EN-US> Tailwind CSS </span><span
-style='font-family:"新細明體",serif'>讓樣式變漂亮</span><span lang=EN-US> --&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;script
-src=&quot;https://cdn.tailwindcss.com&quot;&gt;&lt;/script&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;!-- </span><span style='font-family:
-"新細明體",serif'>引入</span><span lang=EN-US> PapaParse </span><span
-style='font-family:"新細明體",serif'>用來讀取</span><span lang=EN-US> Google Sheets
---&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;script
-src=&quot;https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js&quot;&gt;&lt;/script&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;style&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        body { background-color: #111827;
-color: white; }</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        .card:hover { transform:
-translateY(-5px); border-color: #3b82f6; }</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;/style&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&lt;/head&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&lt;body class=&quot;p-6&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;!-- </span><span style='font-family:
-"新細明體",serif'>標題</span><span lang=EN-US> --&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;div class=&quot;text-center
-mb-8&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        &lt;h1 class=&quot;text-4xl
-font-bold text-blue-500&quot;&gt;Ballsdex </span><span style='font-family:"新細明體",serif'>簡易圖鑑</span><span
-lang=EN-US>&lt;/h1&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        &lt;p class=&quot;text-gray-400
-mt-2&quot;&gt;</span><span style='font-family:"新細明體",serif'>資料來源：</span><span
-lang=EN-US>Google </span><span style='font-family:"新細明體",serif'>試算表</span><span
-lang=EN-US>&lt;/p&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;/div&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;div class=&quot;flex flex-col
-md:flex-row gap-6 max-w-7xl mx-auto&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        </span></p>
-
-<p class=MsoNormal><span lang=EN-US>        &lt;!-- </span><span
-style='font-family:"新細明體",serif'>左側：搜尋與過濾</span><span lang=EN-US> --&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        &lt;div class=&quot;w-full md:w-1/4
-bg-gray-800 p-4 rounded-lg h-fit border border-gray-700&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            &lt;h2 class=&quot;text-xl
-font-bold mb-4 border-b border-gray-600 pb-2&quot;&gt;</span><span
-style='font-family:"新細明體",serif'>篩選器</span><span lang=EN-US>&lt;/h2&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            </span></p>
-
-<p class=MsoNormal><span lang=EN-US>            &lt;input type=&quot;text&quot;
-id=&quot;searchInput&quot; placeholder=&quot;</span><span style='font-family:
-"新細明體",serif'>搜尋名字</span><span lang=EN-US>...&quot; </span></p>
-
-<p class=MsoNormal><span lang=EN-US>                   class=&quot;w-full p-2
-mb-4 bg-gray-700 rounded text-white border border-gray-600 focus:outline-none
-focus:border-blue-500&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            </span></p>
-
-<p class=MsoNormal><span lang=EN-US>            &lt;div
-id=&quot;tagFilters&quot; class=&quot;space-y-2&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                &lt;p
-class=&quot;text-gray-400 text-sm&quot;&gt;</span><span style='font-family:
-"新細明體",serif'>點擊下方標籤過濾：</span><span lang=EN-US>&lt;/p&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                &lt;!-- </span><span
-style='font-family:"新細明體",serif'>標籤按鈕會由程式自動產生</span><span lang=EN-US> --&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            &lt;/div&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            </span></p>
-
-<p class=MsoNormal><span lang=EN-US>            &lt;button
-onclick=&quot;resetFilters()&quot; class=&quot;w-full mt-4 bg-red-600
-hover:bg-red-700 text-white py-1 rounded&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                </span><span
-style='font-family:"新細明體",serif'>重置篩選</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            &lt;/button&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        &lt;/div&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        &lt;!-- </span><span
-style='font-family:"新細明體",serif'>右側：卡片列表</span><span lang=EN-US> --&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        &lt;div
-id=&quot;cardContainer&quot; class=&quot;w-full md:w-3/4 grid grid-cols-2
-md:grid-cols-3 lg:grid-cols-4 gap-4&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            &lt;p
-class=&quot;text-gray-400&quot;&gt;</span><span style='font-family:"新細明體",serif'>正在讀取資料</span><span
-lang=EN-US>...&lt;/p&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        &lt;/div&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;/div&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;script&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        //
-==========================================</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        // </span><span style='font-family:
-"新細明體",serif'>設定區：請把下面的網址換成你的</span><span lang=EN-US> Google Sheet CSV </span><span
-style='font-family:"新細明體",serif'>網址</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        //
-==========================================</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS3L8-yHh4d6Whg4WZiaE8J0Yp0jF6PMuZySx_H-EbbrDolzBveFku0pMSEz5c8-b_ez9sCmvhvInec/pub?output=csv';
-</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        // </span><span style='font-family:
-"新細明體",serif'>例如</span><span lang=EN-US>:
-https://docs.google.com/spreadsheets/d/e/2PACX-.../pub?output=csv</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        //
-==========================================</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        let allBalls = [];</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        let activeTag = '';</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        // 1. </span><span
-style='font-family:"新細明體",serif'>初始化：讀取</span><span lang=EN-US> Google Sheet </span><span
-style='font-family:"新細明體",serif'>資料</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        window.onload = function() {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            if(SHEET_URL.includes('</span><span
-style='font-family:"新細明體",serif'>你的</span><span lang=EN-US>_GOOGLE')) {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>               
-document.getElementById('cardContainer').innerHTML = '&lt;p
-class=&quot;text-red-500&quot;&gt;</span><span style='font-family:"新細明體",serif'>請編輯</span><span
-lang=EN-US> HTML </span><span style='font-family:"新細明體",serif'>檔案，填入正確的</span><span
-lang=EN-US> Google Sheet </span><span style='font-family:"新細明體",serif'>連結！</span><span
-lang=EN-US>&lt;/p&gt;';</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                return;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            }</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            Papa.parse(SHEET_URL, {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                download: true,</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                header: true,</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                complete: function(results)
-{</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                    allBalls =
-results.data.filter(item =&gt; item.Name); // </span><span style='font-family:
-"新細明體",serif'>過濾空行</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                    generateTags();</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                    renderCards(allBalls);</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                },</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                error: function(err) {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                    console.error(err);</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                   
-document.getElementById('cardContainer').innerHTML = '&lt;p
-class=&quot;text-red-500&quot;&gt;</span><span style='font-family:"新細明體",serif'>讀取失敗，請確認網址是否正確且已發布。</span><span
-lang=EN-US>&lt;/p&gt;';</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                }</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            });</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        };</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        // 2. </span><span
-style='font-family:"新細明體",serif'>顯示卡片</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        function renderCards(data) {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            const container =
-document.getElementById('cardContainer');</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            container.innerHTML = '';</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            if (data.length === 0) {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                container.innerHTML =
-'&lt;p class=&quot;text-gray-500&quot;&gt;</span><span style='font-family:"新細明體",serif'>找不到符合的球。</span><span
-lang=EN-US>&lt;/p&gt;';</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                return;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            }</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            data.forEach(ball =&gt; {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                // </span><span
-style='font-family:"新細明體",serif'>處理標籤顯示</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                const tagsHtml = ball.Tags
-? ball.Tags.split(',').map(t =&gt; </span></p>
-
-<p class=MsoNormal><span lang=EN-US>                    `&lt;span
-class=&quot;text-xs bg-gray-700 px-2 py-1 rounded
-mr-1&quot;&gt;${t.trim()}&lt;/span&gt;`</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                ).join('') : '';</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                const card = `</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                    &lt;div
-class=&quot;card bg-gray-800 rounded-lg overflow-hidden border border-gray-700
-transition duration-300&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                        &lt;div
-class=&quot;h-40 bg-gray-900 flex items-center justify-center p-2&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                            &lt;img
-src=&quot;${ball.Image}&quot; alt=&quot;${ball.Name}&quot;
-class=&quot;max-h-full max-w-full object-contain&quot;
-onerror=&quot;this.src='https://placehold.co/100x100?text=No+Image'&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                        &lt;/div&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                        &lt;div
-class=&quot;p-3&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                            &lt;div
-class=&quot;flex justify-between items-start&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                                &lt;h3
-class=&quot;font-bold text-lg leading-tight
-text-white&quot;&gt;${ball.Name}&lt;/h3&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                                &lt;span
-class=&quot;text-xs font-mono text-yellow-500&quot;&gt;#${ball.Rarity ||
-'?'}&lt;/span&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                            &lt;/div&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                            &lt;div
-class=&quot;mt-2 flex flex-wrap gap-1&quot;&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                                ${tagsHtml}</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                            &lt;/div&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                        &lt;/div&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                    &lt;/div&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                `;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                container.innerHTML +=
-card;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            });</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        }</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        // 3. </span><span
-style='font-family:"新細明體",serif'>自動產生標籤按鈕</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        function generateTags() {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            const tags = new Set();</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            allBalls.forEach(ball =&gt; {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                if(ball.Tags)
-ball.Tags.split(',').forEach(t =&gt; tags.add(t.trim()));</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            });</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            const tagContainer =
-document.getElementById('tagFilters');</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            tagContainer.innerHTML = '';</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            </span></p>
-
-<p class=MsoNormal><span lang=EN-US>            tags.forEach(tag =&gt; {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                if(!tag) return;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                const btn =
-document.createElement('button');</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                btn.className = `block
-w-full text-left px-3 py-1 rounded hover:bg-gray-600 transition text-sm mb-1
-${activeTag === tag ? 'bg-blue-600' : 'bg-transparent'}`;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                btn.innerText = tag;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                btn.onclick = () =&gt;
-filterByTag(tag);</span></p>
-
-<p class=MsoNormal><span lang=EN-US>               
-tagContainer.appendChild(btn);</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            });</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        }</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        // 4. </span><span
-style='font-family:"新細明體",serif'>搜尋與過濾功能</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        const searchInput =
-document.getElementById('searchInput');</span></p>
-
-<p class=MsoNormal><span lang=EN-US>       
-searchInput.addEventListener('input', (e) =&gt; {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            const term =
-e.target.value.toLowerCase();</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            filterData(term, activeTag);</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        });</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        function filterByTag(tag) {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            activeTag = (activeTag === tag)
-? '' : tag; // </span><span style='font-family:"新細明體",serif'>再次點擊取消</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            generateTags(); // </span><span
-style='font-family:"新細明體",serif'>重新渲染按鈕顏色</span></p>
-
-<p class=MsoNormal><span lang=EN-US>           
-filterData(searchInput.value.toLowerCase(), activeTag);</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        }</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        function filterData(searchTerm,
-tag) {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            const filtered =
-allBalls.filter(ball =&gt; {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                const matchName = ball.Name
-&amp;&amp; ball.Name.toLowerCase().includes(searchTerm);</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                const matchTag = tag ?
-(ball.Tags &amp;&amp; ball.Tags.includes(tag)) : true;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>                return matchName &amp;&amp;
-matchTag;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            });</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            renderCards(filtered);</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        }</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        function resetFilters() {</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            searchInput.value = '';</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            activeTag = '';</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            generateTags();</span></p>
-
-<p class=MsoNormal><span lang=EN-US>            renderCards(allBalls);</span></p>
-
-<p class=MsoNormal><span lang=EN-US>        }</span></p>
-
-<p class=MsoNormal><span lang=EN-US>    &lt;/script&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&lt;/body&gt;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&lt;/html&gt;</span></p>
-
-</div>
-
+<body class="p-6">
+ 
+    <!-- 標題 -->
+    <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-blue-500">Ballsdex 簡易圖鑑</h1>
+        <p class="text-gray-400 mt-2">資料來源：Google 試算表</p>
+    </div>
+ 
+    <div class="flex flex-col md:flex-row gap-6 max-w-7xl mx-auto">
+       
+        <!-- 左側：搜尋與過濾 -->
+        <div class="w-full md:w-1/4 bg-gray-800 p-4 rounded-lg h-fit border border-gray-700">
+            <h2 class="text-xl font-bold mb-4 border-b border-gray-600 pb-2">篩選器</h2>
+           
+            <input type="text" id="searchInput" placeholder="搜尋名字..."
+                   class="w-full p-2 mb-4 bg-gray-700 rounded text-white border border-gray-600 focus:outline-none focus:border-blue-500">
+           
+            <div id="tagFilters" class="space-y-2">
+                <p class="text-gray-400 text-sm">點擊下方標籤過濾：</p>
+                <!-- 標籤按鈕會由程式自動產生 -->
+            </div>
+           
+            <button onclick="resetFilters()" class="w-full mt-4 bg-red-600 hover:bg-red-700 text-white py-1 rounded">
+                重置篩選
+            </button>
+        </div>
+ 
+        <!-- 右側：卡片列表 -->
+        <div id="cardContainer" class="w-full md:w-3/4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <p class="text-gray-400">正在讀取資料...</p>
+        </div>
+    </div>
+ 
+    <script>
+        // ==========================================
+        // 設定區：請把下面的網址換成你的 Google Sheet CSV 網址
+        // ==========================================
+        const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS3L8-yHh4d6Whg4WZiaE8J0Yp0jF6PMuZySx_H-EbbrDolzBveFku0pMSEz5c8-b_ez9sCmvhvInec/pub?output=csv';
+        // 例如: https://docs.google.com/spreadsheets/d/e/2PACX-.../pub?output=csv
+        // ==========================================
+ 
+        let allBalls = [];
+        let activeTag = '';
+ 
+        // 1. 初始化：讀取 Google Sheet 資料
+        window.onload = function() {
+            if(SHEET_URL.includes('你的_GOOGLE')) {
+                document.getElementById('cardContainer').innerHTML = '<p class="text-red-500">請編輯 HTML 檔案，填入正確的 Google Sheet 連結！</p>';
+                return;
+            }
+ 
+            Papa.parse(SHEET_URL, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    allBalls = results.data.filter(item => item.Name); // 過濾空行
+                    generateTags();
+                    renderCards(allBalls);
+                },
+                error: function(err) {
+                    console.error(err);
+                    document.getElementById('cardContainer').innerHTML = '<p class="text-red-500">讀取失敗，請確認網址是否正確且已發布。</p>';
+                }
+            });
+        };
+ 
+        // 2. 顯示卡片
+        function renderCards(data) {
+            const container = document.getElementById('cardContainer');
+            container.innerHTML = '';
+ 
+            if (data.length === 0) {
+                container.innerHTML = '<p class="text-gray-500">找不到符合的球。</p>';
+                return;
+            }
+ 
+            data.forEach(ball => {
+                // 處理標籤顯示
+                const tagsHtml = ball.Tags ? ball.Tags.split(',').map(t =>
+                    `<span class="text-xs bg-gray-700 px-2 py-1 rounded mr-1">${t.trim()}</span>`
+                ).join('') : '';
+ 
+                const card = `
+                    <div class="card bg-gray-800 rounded-lg overflow-hidden border border-gray-700 transition duration-300">
+                        <div class="h-40 bg-gray-900 flex items-center justify-center p-2">
+                            <img src="${ball.Image}" alt="${ball.Name}" class="max-h-full max-w-full object-contain" onerror="this.src='https://placehold.co/100x100?text=No+Image'">
+                        </div>
+                        <div class="p-3">
+                            <div class="flex justify-between items-start">
+                                <h3 class="font-bold text-lg leading-tight text-white">${ball.Name}</h3>
+                                <span class="text-xs font-mono text-yellow-500">#${ball.Rarity || '?'}</span>
+                            </div>
+                            <div class="mt-2 flex flex-wrap gap-1">
+                                ${tagsHtml}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+ 
+        // 3. 自動產生標籤按鈕
+        function generateTags() {
+            const tags = new Set();
+            allBalls.forEach(ball => {
+                if(ball.Tags) ball.Tags.split(',').forEach(t => tags.add(t.trim()));
+            });
+ 
+            const tagContainer = document.getElementById('tagFilters');
+            tagContainer.innerHTML = '';
+           
+            tags.forEach(tag => {
+                if(!tag) return;
+                const btn = document.createElement('button');
+                btn.className = `block w-full text-left px-3 py-1 rounded hover:bg-gray-600 transition text-sm mb-1 ${activeTag === tag ? 'bg-blue-600' : 'bg-transparent'}`;
+                btn.innerText = tag;
+                btn.onclick = () => filterByTag(tag);
+                tagContainer.appendChild(btn);
+            });
+        }
+ 
+        // 4. 搜尋與過濾功能
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            filterData(term, activeTag);
+        });
+ 
+        function filterByTag(tag) {
+            activeTag = (activeTag === tag) ? '' : tag; // 再次點擊取消
+            generateTags(); // 重新渲染按鈕顏色
+            filterData(searchInput.value.toLowerCase(), activeTag);
+        }
+ 
+        function filterData(searchTerm, tag) {
+            const filtered = allBalls.filter(ball => {
+                const matchName = ball.Name && ball.Name.toLowerCase().includes(searchTerm);
+                const matchTag = tag ? (ball.Tags && ball.Tags.includes(tag)) : true;
+                return matchName && matchTag;
+            });
+            renderCards(filtered);
+        }
+ 
+        function resetFilters() {
+            searchInput.value = '';
+            activeTag = '';
+            generateTags();
+            renderCards(allBalls);
+        }
+    </script>
 </body>
-
 </html>
